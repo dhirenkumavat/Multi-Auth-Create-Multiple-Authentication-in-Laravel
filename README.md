@@ -14,15 +14,15 @@ So, let's see follow simple steps:
 
 ## Step 1: Install Laravel 9 ##
 
-## composer create-project laravel/laravel example-app ## 
+``` composer create-project laravel/laravel example-app ```
 
 ## Step 2: Database Configuration ##
 
-## .env ## 
+.env
 
 ## Step 3: Update Migration and Model ##
 
-## <?php
+ ``` <?php
   
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -30,11 +30,6 @@ use Illuminate\Support\Facades\Schema;
   
 class UsersVerify extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('users_verify', function (Blueprint $table) {
@@ -57,8 +52,76 @@ class UsersVerify extends Migration
     {
         
     }
-}?>
-##
+}
+```
+```
+php artisan migrate
+```
+Let's update User Model as below code:
+```
+namespace App\Models;
+  
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+  
+class User extends Authenticatable
+{
+    use HasApiTokens, HasFactory, Notifiable;
+  
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'type'
+    ];
+  
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array
+
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+  
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+ 
+    /**
+     * Interact with the user's first name.
+     *
+     * @param  string  $value
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function type(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) =>  ["user", "admin", "manager"][$value],
+        );
+    }
+}
+```
+## Step 4: Create Auth using scaffold ## 
+Now, in this step, we will create auth scaffold command to create login, register and dashboard. so run following commands:
 
 
 
