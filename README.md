@@ -12,17 +12,17 @@ When we log in as admin then it will redirect on admin routes, If you log in as 
 
 So, let's see follow simple steps:
 
-Step 1: Install Laravel 9
+## Step 1: Install Laravel 9 ##
 
-composer create-project laravel/laravel example-app
+## composer create-project laravel/laravel example-app ## 
 
-Step 2: Database Configuration
+## Step 2: Database Configuration ##
 
-.env
+## .env ## 
 
-Step 3: Update Migration and Model
+## Step 3: Update Migration and Model ##
 
-<?php
+## <?php
   
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -57,7 +57,8 @@ class UsersVerify extends Migration
     {
         
     }
-}
+}?>
+##
 
 
 
